@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import uz.mk.appwarehousespringdatarest.entity.Attachment;
 import uz.mk.appwarehousespringdatarest.entity.AttachmentContent;
-import uz.mk.appwarehousespringdatarest.payload.Result;
+import uz.mk.appwarehousespringdatarest.payload.ApiResponse;
 import uz.mk.appwarehousespringdatarest.repository.AttachmentContentRepository;
 import uz.mk.appwarehousespringdatarest.repository.AttachmentRepository;
 
@@ -40,7 +40,7 @@ public class AttachmentService {
     }
 
     @SneakyThrows
-    public Result upload(MultipartHttpServletRequest request) {
+    public ApiResponse upload(MultipartHttpServletRequest request) {
         Iterator<String> fileNames = request.getFileNames();
         MultipartFile file = request.getFile(fileNames.next());
         Attachment attachment = new Attachment();
@@ -55,7 +55,7 @@ public class AttachmentService {
         attachmentContent.setAttachment(savedAttachment);
         attachmentContentRepository.save(attachmentContent);
 
-        return new Result("File saved", true, savedAttachment.getId());
+        return new ApiResponse("File saved", true, savedAttachment.getId());
     }
 
     @SneakyThrows
